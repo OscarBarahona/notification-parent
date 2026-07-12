@@ -1,0 +1,43 @@
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+/shelf/
+/workspace.xml
+/tasks.xml
+
+# =========================
+# Archivos compilados (Java)
+# =========================
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# Si usas Gradle:
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# Entornos, Secretos y SO
+# =========================
+.env
+.env.local
+application-local.yml
+application-local.properties
+
+# Windows / macOS
+.DS_Store
+Thumbs.db

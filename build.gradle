@@ -1,0 +1,38 @@
+plugins {
+    id 'jacoco'
+}
+
+allprojects {
+
+    group = project.findProperty("group")
+    version = project.findProperty("version")
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+
+    apply plugin: 'java'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(
+                    project.findProperty("javaVersion") as Integer
+            )
+        }
+    }
+
+    tasks.withType(Test).configureEach {
+        useJUnitPlatform()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+    }
+
+    jacoco {
+        toolVersion = "0.8.13"
+    }
+}
