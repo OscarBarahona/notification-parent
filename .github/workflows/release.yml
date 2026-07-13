@@ -1,0 +1,42 @@
+name: Publish Library
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Resolve release version
+        shell: bash
+        run: echo "ORG_GRADLE_PROJECT_projectVersion=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
+      - name: Validate release
+        run: ./gradlew clean check --no-configuration-cache
+
+      - name: Publish to GitHub Packages
+        env:
+          MAVEN_REPOSITORY_URL: https://maven.pkg.github.com/${{ github.repository }}
+          MAVEN_REPOSITORY_USERNAME: ${{ github.actor }}
+          MAVEN_REPOSITORY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew :notification-library:publish --no-configuration-cache
