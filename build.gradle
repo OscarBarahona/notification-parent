@@ -1,11 +1,10 @@
 plugins {
-    id 'jacoco'
+    id 'base'
 }
 
 allprojects {
-
-    group = project.findProperty("group")
-    version = project.findProperty("version")
+    group = providers.gradleProperty('projectGroup').get()
+    version = providers.gradleProperty('projectVersion').get()
 
     repositories {
         mavenCentral()
@@ -13,26 +12,64 @@ allprojects {
 }
 
 subprojects {
-
     apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    def configuredJavaVersion =
+            providers.gradleProperty('javaVersion').get().toInteger()
 
     java {
         toolchain {
-            languageVersion = JavaLanguageVersion.of(
-                    project.findProperty("javaVersion") as Integer
-            )
+            languageVersion =
+                    JavaLanguageVersion.of(configuredJavaVersion)
         }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release = configuredJavaVersion
+        options.compilerArgs += ['-parameters']
     }
 
     tasks.withType(Test).configureEach {
         useJUnitPlatform()
     }
 
-    tasks.withType(JavaCompile).configureEach {
-        options.encoding = "UTF-8"
+    jacoco {
+        toolVersion = '0.8.14'
     }
 
-    jacoco {
-        toolVersion = "0.8.13"
+    tasks.named('test') {
+        finalizedBy tasks.named('jacocoTestReport')
+    }
+
+    tasks.named('jacocoTestReport') {
+        dependsOn tasks.named('test')
+
+        reports {
+            xml.required = true
+            html.required = true
+            csv.required = false
+        }
+    }
+}
+
+project(':notification-library') {
+    tasks.named('jacocoTestCoverageVerification') {
+        dependsOn tasks.named('test')
+
+        violationRules {
+            rule {
+                limit {
+                    counter = 'LINE'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.80
+                }
+            }
+        }
+    }
+
+    tasks.named('check') {
+        dependsOn tasks.named('jacocoTestCoverageVerification')
     }
 }
