@@ -1,43 +1,38 @@
-# =========================
+# Gradle
+.gradle/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
 # IntelliJ IDEA
-# =========================
 .idea/
 *.iml
-*.iws
 *.ipr
+*.iws
 out/
-/shelf/
-/workspace.xml
-/tasks.xml
 
-# =========================
-# Archivos compilados (Java)
-# =========================
+# Java
 *.class
 *.jar
 *.war
 *.ear
-*.nar
+hs_err_pid*
+replay_pid*
 
-# Si usas Gradle:
-.gradle/
-build/
-!gradle/wrapper/gradle-wrapper.jar
-
-# =========================
 # Logs
-# =========================
 *.log
 logs/
 
-# =========================
-# Entornos, Secretos y SO
-# =========================
+# Environment variables and secrets
 .env
-.env.local
-application-local.yml
-application-local.properties
+.env.*
+!.env.example
 
-# Windows / macOS
+# Operating systems
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
