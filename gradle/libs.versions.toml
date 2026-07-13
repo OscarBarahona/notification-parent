@@ -1,0 +1,17 @@
+[versions]
+
+java = "21"
+
+springboot = "3.5.9"
+
+lombok = "1.18.38"
+
+mapstruct = "1.6.3"
+
+junit = "5.13.4"
+
+mockito = "5.18.0"
+
+jacoco = "0.8.13"
+
+slf4j = "2.0.17"

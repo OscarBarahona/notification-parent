@@ -1,0 +1,15 @@
+.git
+.github
+.gradle
+**/build
+.idea
+*.iml
+out
+*.log
+.env
+.env.*
+gha-creds-*.json
+APPLY-DELIVERY-*.md
+DELIVERY-*-MANIFEST.txt
+verify-delivery-*.ps1
+verify-delivery-*.sh
