@@ -1,0 +1,5 @@
+{
+  "channel": "PUSH",
+  "recipient": "device-token-1234567890",
+  "message": "You have a new message"
+}

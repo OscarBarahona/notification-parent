@@ -1,0 +1,6 @@
+{
+  "channel": "EMAIL",
+  "recipient": "customer@example.com",
+  "subject": "Welcome",
+  "message": "Your account has been created"
+}
